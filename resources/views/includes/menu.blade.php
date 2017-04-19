@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="logo pull-left">
-                    <a href="{{url('/')}}"><img src="{{url('../')}}/theme/images/home/logo.png"
-                                                alt=""/></a>
+                    <a href="{{url('/')}}"><img src="{{asset('theme/images/home/logo.png')}}"
+                                                alt="Home Page"/></a>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                                 <li><a href="{{url('/newArrival')}}">New Arrival</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="{{url('/blog')}}">Blog<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="{{url('/blog')}}">Blog List</a></li>
                                 {{--<li><a href="blog-single.html">Blog Single</a></li>--}}
