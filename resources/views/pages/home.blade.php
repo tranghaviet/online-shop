@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <section id="slider"><!--slider - trinh chieu tren dau trang-->
         @include('includes.slider')
     </section><!--/slider-->
@@ -19,10 +18,9 @@
                     @include('includes.category_tab')
 
 
-                    {{--<div class="recommended_items"><!--recommended_items-->--}}
-                    {{--<h2 class="title text-center">recommended items</h2>--}}
-                    {{--@include('front.recommends')--}}
-                    {{--</div><!--/recommended_items-->--}}
+                    <div class="recommended_items"><!--recommended_items-->
+                    @include('includes.recommends')
+                    </div><!--/recommended_items-->
 
                 </div>
             </div>
