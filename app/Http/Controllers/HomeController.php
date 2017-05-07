@@ -90,21 +90,6 @@ class HomeController extends Controller {
         return view('pages.groups')->with($data);
     }
 
-    public function login(Request $request) {
-        dd($request->all());
-//        if (Auth::attempt(array('email' => $request->get('email'),
-//            'password' => $request->get('password')))) {
-//            session([
-//                'email' => $request->get('email')
-//            ]);
-//            echo "nàds";
-//            return Redirect::back();
-//        } else {
-//            Session::flash('message', "Invalid Credentials , Please try again.");
-//            echo "nàds";
-//            return Redirect::back();
-//        }
-    }
 
 
 }
