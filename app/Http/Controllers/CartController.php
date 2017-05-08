@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Products;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -38,17 +39,14 @@ class CartController extends Controller
     public function store(Request $request)
     {
         Cart::add($request->id, $request->name, 1, $request->price);
-        return Redirect::to('/cart');
-    }
-    /**
-     * Reduce a exist created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function reduce(Request $request)
-    {
-        Cart::add($request->id, $request->name, 1, $request->price);
+
+//        Cart::add($request->id, $request->name, 1, $request->price)->assosiate(new Products());
+
+        $items = array();
+        foreach (Cart::content() as $i) {
+            $i->associate(new Products());
+            $items[$i->id] = $i->model->Picture;
+        }
         return Redirect::to('/cart');
     }
 
