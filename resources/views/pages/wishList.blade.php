@@ -5,7 +5,7 @@
 
     <section id="advertisement">
         <div class="container">
-            <img src="{{asset('theme/images/shop/advertisement.jpg')}}" alt=""/>
+            <img src="{{asset('/images/shop/advertisement.jpg')}}" alt=""/>
         </div>
     </section>
 

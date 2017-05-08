@@ -6,7 +6,7 @@
         <div class="container">
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="{{url('./')}}">Home</a></li>
                     <li class="active">Check out</li>
                 </ol>
             </div><!--/breadcrums-->
@@ -25,45 +25,33 @@
                             <div class="shopper-info">
                                 <p>Shopper Information</p>
 
-                                <input type="text" name="fullname" placeholder="Display Name"
+                                <input type="text" name="fullname" placeholder="Họ tên"
                                        class="form-control" value="{{ old('fullname') }}">
 
                                 <span style="color:red">{{ $errors->first('fullname') }}</span>
                                 <hr>
+                                    <input type="text" placeholder="Địa chỉ(số tầng, số nhà, đường) - vui lòng nhập CHÍNH XÁC" name="address"
+                                       class="form-control" value="{{ old('address') }}">
 
-                                <input type="text" placeholder="State Name" name="state"
+                                <span style="color:red">{{ $errors->first('city') }}</span>
+                                <hr>
+
+                                <input type="text" placeholder="Quận/Huyện" name="state"
                                        class="form-control" value="{{ old('state') }}">
 
                                 <span style="color:red">{{ $errors->first('state') }}</span>
 
                                 <hr>
-                                <input type="text" placeholder="Pincode" name="pincode"
-                                       class="form-control" value="{{ old('pincode') }}">
+                                <input type="text" placeholder="Số điện thoại" name="phone"
+                                       class="form-control" value="{{ old('phone') }}">
 
-                                <span style="color:red">{{ $errors->first('pincode') }}</span>
+                                <span style="color:red">{{ $errors->first('phone') }}</span>
 
                                 <hr>
-                                <input type="text" placeholder="City Name" name="city"
+                                <input type="text" placeholder="Thành Phố" name="city"
                                        class="form-control" value="{{ old('city') }}">
 
                                 <span style="color:red">{{ $errors->first('city') }}</span>
-
-                                <hr>
-
-                                <select name="country" class="form-control">
-                                    <option value="{{ old('country') }}" selected="selected">Select
-                                        country
-                                    </option>
-                                    <option value="United States">United States</option>
-                                    <option value="Bangladesh">Bangladesh</option>
-                                    <option value="UK">UK</option>
-                                    <option value="India">India</option>
-                                    <option value="Pakistan">Pakistan</option>
-                                    <option value="Ucrane">Ucrane</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="Dubai">Dubai</option>
-                                </select>
-                                <span style="color:red">{{ $errors->first('country') }}</span>
 
 
                             </div>
@@ -163,10 +151,6 @@
                 <input type="radio" name="pay" value="COD" checked="checked" id="cash"> COD
 
             </span>
-                    <span>
-                <input type="radio" name="pay" value="paypal" id="paypal"> PayPal
-                @include('front.paypal')
-            </span>
 
                     <span>
             <input type="submit" value="COD" class="btn btn-primary" id="cashbtn">
@@ -176,25 +160,5 @@
 
         </form>
 
-
-        <script>
-
-            $('#paypalbtn').hide();
-            //  $('#cashbtn').hide();
-
-            $(':radio[id=paypal]').change(function () {
-                $('#paypalbtn').show();
-                $('#cashbtn').hide();
-
-            });
-
-            $(':radio[id=cash]').change(function () {
-                $('#paypalbtn').hide();
-                $('#cashbtn').show();
-
-            });
-        </script>
     </section> <!--/#cart_items-->
-
-
     @endsection

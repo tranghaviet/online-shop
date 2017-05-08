@@ -25,28 +25,46 @@
                     @foreach(Cart::content() as $row)
                     <tr>
                         <td class="cart_product">
-                            <a href=""><img src="{{asset("/images/home/product2.JPG")}}" alt=""></a>
+                            <a href="{{url('/product_details/'.$row->id)}}"><img src="{{asset("/images/home/product2.JPG")}}" alt=""></a>
                         </td>
                         <td class="cart_description">
-                            <h4><a href="">{{$row->name}}</a></h4>
+                            <h4><a href="{{url('/product_details/'.$row->id)}}">{{$row->name}}</a></h4>
                             <p>Web ID: {{$row->id}}</p>
+                            <form action="{{ url('/cart/remove') }}" method="POST">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                <input type="submit" class="danger" value=" Remove ">
+                            </form>
                         </td>
                         <td class="cart_price">
                             <p>{{$row->price}}Đ</p>
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-
+                                <form action="{{ url('/cart/update') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                    <input type="hidden" name="qty" value="{{ $row->qty + 1 }}">
+                                    <input type="submit" class="cart_quantity_up" value=" + ">
+                                </form>
                                 <input class="cart_quantity_input" type="text" name="quantity" value="{{$row->qty}}" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
+                                <form action="{{ url('/cart/update') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                    <input type="hidden" name="qty" value="{{ $row->qty - 1}}">
+                                    <input type="submit" class="cart_quantity_down" value=" - ">
+                                </form>
                             </div>
                         </td>
                         <td class="cart_total">
                             <p class="cart_total_price">{{$row->total}}Đ</p>
                         </td>
                         <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                            <form class="cart_quantity_delete" action="{{ url('/cart/remove') }}" method="POST">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                <input type="submit" class="danger" value=" X ">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
