@@ -27,9 +27,9 @@
                             </button>
                         </div>
                         <div class="col-sm-6">
-                            <img src="{{asset('theme/images/home/girl1.jpg')}}"
+                            <img src="{{asset('/images/home/girl1.jpg')}}"
                                  class="girl img-responsive" alt=""/>
-                            <img src="{{asset('theme/images/home/pricing.png')}}"
+                            <img src="{{asset('/images/home/pricing.png')}}"
                                  class="pricing" alt=""/>
                         </div>
                     </div>
@@ -44,9 +44,9 @@
                             </button>
                         </div>
                         <div class="col-sm-6">
-                            <img src="{{asset('theme/images/home/girl1.jpg')}}"
+                            <img src="{{asset('/images/home/girl1.jpg')}}"
                                  class="girl img-responsive" alt=""/>
-                            <img src="{{asset('theme/images/home/pricing.png')}}"
+                            <img src="{{asset('/images/home/pricing.png')}}"
                                  class="pricing" alt=""/>
                         </div>
                     </div>

@@ -8,20 +8,19 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="{{url('/product_details/'.$recommended_items[$i]->ID)}}">
-                                    <img src="{{asset("/images/home/gallery2.jpg")}}"
-                                         alt="{{$recommended_items[$i]->Describe}}"></a>
+                                    <img src="{{asset("/images/products/".$recommended_items[$i]->Picture)}}"
+                                         alt="{{$recommended_items[$i]->Describe}}" style="width:255px;height:255px"></a>
                                 <h2>{{$recommended_items[$i]->Price}} Đ</h2>
                                 <p>
                                     <a href="{{url('/product_details/'.$recommended_items[$i]->ID)}}">{{$recommended_items[$i]->Name}}</a>
                                 </p>
-                                <form action="{{ url('/cart') }}" method="POST">
+                                <form action="{{ url('/cart') }}" method="POST" id="add-to-cart-form-{{ $recommended_items[$i]->ID }}">
                                     {!! csrf_field() !!}
                                     <input type="hidden" name="id" value="{{ $recommended_items[$i]->ID }}">
                                     <input type="hidden" name="name" value="{{ $recommended_items[$i]->Name }}">
                                     <input type="hidden" name="price" value="{{ $recommended_items[$i]->Price }}">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <input type="submit" class="btn btn-default add-to-cart" value="Add to Cart">
                                 </form>
+                                <button type="submit" form="add-to-cart-form-{{ $recommended_items[$i]->ID }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                             </div>
                         </div>
                     </div>
@@ -36,20 +35,19 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="{{url('/product_details/'.$recommended_items[$i]->ID)}}">
-                                    <img src="{{asset("/images/home/gallery2.jpg")}}"
-                                         alt="{{$recommended_items[$i]->Describe}}"></a>
+                                    <img src="{{asset("/images/products/".$recommended_items[$i]->Picture)}}"
+                                         alt="{{$recommended_items[$i]->Describe}}" style="width:255px;height:255px"></a>
                                 <h2>{{$recommended_items[$i]->Price}} Đ</h2>
                                 <p>
                                     <a href="{{url('/product_details/'.$recommended_items[$i]->ID)}}">{{$recommended_items[$i]->Name}}</a>
                                 </p>
-                                <form action="{{ url('/cart') }}" method="POST">
+                                <form action="{{ url('/cart') }}" method="POST" id="add-to-cart-form-{{ $recommended_items[$i]->ID }}">
                                     {!! csrf_field() !!}
                                     <input type="hidden" name="id" value="{{ $recommended_items[$i]->ID }}">
                                     <input type="hidden" name="name" value="{{ $recommended_items[$i]->Name }}">
                                     <input type="hidden" name="price" value="{{ $recommended_items[$i]->Price }}">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <input type="submit" class="btn btn-default add-to-cart" value="Add to Cart">
                                 </form>
+                                <button type="submit" form="add-to-cart-form-{{ $recommended_items[$i]->ID }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                             </div>
                         </div>
                     </div>

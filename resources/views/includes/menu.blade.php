@@ -44,12 +44,12 @@
             <div class="col-sm-5">
                 <div class="shop-menu right">
                     <ul class="nav navbar-nav">
-                        @if (!Auth::check())
+                        @if (Auth::check())
                         <li><a href="{{url('/profile')}}"><i class="fa fa-user"></i> Account</a></li>
                         @endif
                         <li><a href="{{url('/wishlist')}}"><i class="fa fa-star"></i> Wishlist</a></li>
                         <li><a href="{{url('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                        <li><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                        <li><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> Cart({{ Cart::instance('default')->count(false) }})</a></li>
                         <li>
                             <i class="fa fa-lock"></i>
                         @if (Auth::guest())
