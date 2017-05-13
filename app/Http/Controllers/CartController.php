@@ -17,6 +17,10 @@ class CartController extends Controller
      */
     public function index()
     {
+        foreach (Cart::content() as $i) {
+            $i->associate(new Products());
+            Cart::setTax($i->rowId, 10); // set tax = 10%
+        }
         return view('pages.cart');
     }
 
@@ -40,13 +44,6 @@ class CartController extends Controller
     {
         Cart::add($request->id, $request->name, 1, $request->price);
 
-//        Cart::add($request->id, $request->name, 1, $request->price)->assosiate(new Products());
-
-        $items = array();
-        foreach (Cart::content() as $i) {
-            $i->associate(new Products());
-            $items[$i->id] = $i->model->Picture;
-        }
         return Redirect::to('/cart');
     }
 

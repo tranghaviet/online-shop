@@ -16,8 +16,8 @@
             </div>
 
 
-            <?php // form start here?>
-            <form action="{{url('/')}}/formvalidate" method="post">
+            <!-- {{--// form start here--}} -->
+            <form action="{{url('/')}}/formvalidate" method="POST" id="checkout">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="shopper-informations">
                     <div class="row">
@@ -28,9 +28,17 @@
                                 <input type="text" name="fullname" placeholder="Họ tên"
                                        class="form-control" value="{{ old('fullname') }}">
 
+                                <hr>
+                                <input type="text" placeholder="Số điện thoại" name="phone"
+                                       class="form-control" value="{{ old('phone') }}">
+
+                                <span style="color:red">{{ $errors->first('phone') }}</span>
+
                                 <span style="color:red">{{ $errors->first('fullname') }}</span>
                                 <hr>
-                                    <input type="text" placeholder="Địa chỉ(số tầng, số nhà, đường) - vui lòng nhập CHÍNH XÁC" name="address"
+                                <input type="text"
+                                       placeholder="Địa chỉ(số tầng, số nhà, đường, xã/phường) - vui lòng nhập CHÍNH XÁC"
+                                       name="address"
                                        class="form-control" value="{{ old('address') }}">
 
                                 <span style="color:red">{{ $errors->first('city') }}</span>
@@ -40,12 +48,6 @@
                                        class="form-control" value="{{ old('state') }}">
 
                                 <span style="color:red">{{ $errors->first('state') }}</span>
-
-                                <hr>
-                                <input type="text" placeholder="Số điện thoại" name="phone"
-                                       class="form-control" value="{{ old('phone') }}">
-
-                                <span style="color:red">{{ $errors->first('phone') }}</span>
 
                                 <hr>
                                 <input type="text" placeholder="Thành Phố" name="city"
@@ -60,16 +62,18 @@
                         <div class="col-sm-4">
                             <div class="order-message">
                                 <p>Shipping Order</p>
-                                <textarea name="message"
+                                <textarea form="checkout" name="message"
                                           placeholder="Notes about your order, Special Notes for Delivery"
                                           rows="16"></textarea>
-                                <label><input type="checkbox"> Shipping to bill address</label>
+                                <span style="color:red">{{ $errors->first('massage') }}</span>
+                                {{--<label><input type="checkbox"> Shipping to bill address</label>--}}
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
 
-                <?php // form end here?>
+                <!-- {{--// form end here--}} -->
 
                 <div class="review-payment">
                     <h2>Review & Payment</h2>
@@ -88,34 +92,56 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($cartItems as $cartItem)
+                        @foreach(Cart::content() as $row)
                         <tr>
                             <td class="cart_product">
-                                <a href=""><img src="images/cart/one.png" alt=""></a>
+                                <a href="{{url('/product_details/'.$row->id)}}">
+                                    <img src="{{asset("/images/products/".$row->model->Picture)}}"
+                                         alt="{{$row->model->Description}}"
+                                         style="width: 110px; height: 110px;"></a>
                             </td>
                             <td class="cart_description">
-                                <h4><a href="">{{$cartItem->name}}</a></h4>
-                                <p>Web ID: {{$cartItem->id}}</p>
+                                <h4>
+                                    <a href="{{url('/product_details/'.$row->id)}}">{{$row->name}}</a>
+                                </h4>
+                                <p>Web ID: {{$row->id}}</p>
+                                <form action="{{ url('/cart/remove') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                    <input type="submit" class="btn btn-danger" value=" Remove ">
+                                </form>
                             </td>
                             <td class="cart_price">
-                                <p>${{$cartItem->price}}</p>
+                                <p>{{$row->price}} Đ</p>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-
-                                    <input class="cart_quantity_input" type="text"
-                                           value="{{$cartItem->qty}}" readonly="readonly" size="2">
-
+                                    <form action="{{ url('/cart/update') }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                        <input type="hidden" name="qty" value="{{ $row->qty + 1 }}">
+                                        <input type="submit" class="btn btn-success" value=" + ">
+                                    </form>
+                                    <input class="cart_quantity_input" type="text" name="quantity"
+                                           value="{{$row->qty}}" autocomplete="off" size="2">
+                                    <form action="{{ url('/cart/update') }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                        <input type="hidden" name="qty" value="{{ $row->qty - 1}}">
+                                        <input type="submit" class="btn btn-info" value=" - ">
+                                    </form>
                                 </div>
                             </td>
                             <td class="cart_total">
-                                <p class="cart_total_price">${{$cartItem->subtotal}}</p>
+                                <p class="cart_total_price">{{$row->total}} Đ</p>
                             </td>
                             <td class="cart_delete">
-                                <a class="cart_quantity_delete"
-                                   href="{{url('/cart/remove')}}/{{$cartItem->rowId}}"><i
-                                            class="fa fa-times"></i></a>
-
+                                <form class="cart_quantity_delete"
+                                      action="{{ url('/cart/remove') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" name="rowId" value="{{ $row->rowId }}">
+                                    <input type="submit" class="btn btn-warning" value=" X ">
+                                </form>
                             </td>
                         </tr>
                         @endforeach
@@ -125,11 +151,11 @@
                                 <table class="table table-condensed total-result">
                                     <tr>
                                         <td>Cart Sub Total</td>
-                                        <td>${{Cart::subtotal()}}</td>
+                                        <td>{{Cart::subtotal()}} Đ</td>
                                     </tr>
                                     <tr>
                                         <td> Tax</td>
-                                        <td>${{Cart::tax()}}</td>
+                                        <td>{{Cart::tax()}} Đ</td>
                                     </tr>
                                     <tr class="shipping-cost">
                                         <td>Shipping Cost</td>
@@ -137,7 +163,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td><span>${{Cart::total()}}</span></td>
+                                        <td><span>{{Cart::total()}} Đ</span></td>
                                     </tr>
                                 </table>
                             </td>
@@ -146,19 +172,14 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="payment-options">
+            <div class="payment-options">
             <span>
-                <input type="radio" name="pay" value="COD" checked="checked" id="cash"> COD
-
+            <button type="submit" form="checkout" class="btn btn-primary">Xác nhận</button>
             </span>
-
-                    <span>
-            <input type="submit" value="COD" class="btn btn-primary" id="cashbtn">
-            </span>
-                </div>
+            </div>
         </div>
 
-        </form>
+    </section>
 
     </section> <!--/#cart_items-->
-    @endsection
+@endsection
