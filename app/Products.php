@@ -4,8 +4,34 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Products extends Model {
+
+    use SearchableTrait;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'Name' => 10,
+            'Describe' => 8,
+            'Price' => 5,
+            'Promotion' => 2,
+            'Nickname' => 5,
+        ],
+    ];
+
     protected $fillable = [
         'Name', 'Description', 'price', 'promotion', 'picture', 'categoryid', 'ceasefire', 'nickname',
     ];
