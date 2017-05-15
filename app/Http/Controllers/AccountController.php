@@ -78,4 +78,21 @@ class AccountController extends Controller
         }
         return redirect('./profile');
     }
+
+    public function orders() {
+        $orders = DB::table('orders')->where('UserID', Auth::user()->id)->get();
+//        $orderdetail = DB::table('orderdetail')->where('ID', $orders->first()->ID)->get();
+
+//        $a = DB::select('select od.ID, ProductID, Quantity, od.Price from orders o, orderdetail od where o.ID = od.ID and o.UserID = '.Auth::user()->id);
+        $orderdetail = DB::table('orders as o')->join('orderdetail as od', 'o.ID', '=', 'od.ID')
+            ->where('o.UserID', Auth::user()->id)
+            ->join('products as p', 'od.ProductID', '=', 'p.ID')
+            ->select('od.ID', 'ProductID', 'Quantity', 'od.Price', 'Sum', 'p.Name', 'p.Picture', 'p.Describe')
+            ->get();
+        $data = ['orders' => $orders,
+            'orderdetail' => $orderdetail];
+//        dd($data);
+        return view('pages.orders')->with($data);
+    }
+
 }
